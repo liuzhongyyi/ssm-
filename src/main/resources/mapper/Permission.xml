@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzy.mapper.PermissionMapper">
+    <select id="getPermission" resultType="com.lzy.domain.Permission">
+        select * from permission ;
+    </select>
+
+    <select id="getPermissionById" resultType="com.lzy.domain.Permission">
+         SELECT * from permission WHERE pid in(SELECT pid FROM role_permission_rel WHERE rid=#{rid})
+    </select>
+
+</mapper>

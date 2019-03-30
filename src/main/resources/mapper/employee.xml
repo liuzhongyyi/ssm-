@@ -1,0 +1,84 @@
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--保存一个Employee -->
+<mapper namespace="com.lzy.mapper.EmployeeMapper" >
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+   insert into employee (
+    id,
+    username,
+    password,
+    inputtime,
+    tel,
+    email,
+    state,
+    admin,
+    dep_id
+    )
+    values (#{id},#{username},#{password},#{inputtime},
+      #{tel}, #{email}, #{state}, #{admin},
+      #{department.id})
+    </insert>
+
+    <!-- 查询所有的Employee-->
+    <select id="getEmployeeList" resultMap="base">
+        select e.id,e.username,e.inputtime,e.tel,e.state,e.admin,e.password,d.id as d_id,d.name as d_name from employee e ,department d where e.dep_id=d.id
+    </select>
+    <resultMap id="base" type="com.lzy.domain.Employee">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="inputtime" column="inputtime"></result>
+        <result property="tel" column="email"></result>
+        <result property="state" column="state"></result>
+        <result property="admin" column="admin"></result>
+        <result property="password" column="password"></result>
+        <association property="department" javaType="com.lzy.domain.Department" columnPrefix="d_">
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+        </association>
+    </resultMap>
+
+    <!-- 删除一个-->
+    <update id="deleteEmployee" >
+        update employee set state=false where id=#{id}
+    </update>
+
+    <!-- 更新Employee-->
+    <update id="updateEmployee">
+        update employee
+        set username = #{username},
+            inputtime = #{inputtime},
+            tel = #{tel},
+            email = #{email},
+            admin = #{admin},
+            dep_id = #{department.id}
+        where id = #{id}
+    </update>
+
+    <!--更新状态 -->
+    <update id="updateState">
+        update employee set state=false where id =#{id}
+    </update>
+    <!-- employee与角色的关系 -->
+    <insert id="insertRaletionEmployyeeAndRole">
+        insert into employee_role_rel values(#{id},#{rid})
+    </insert>
+    <!--撤销employee与role的关系 -->
+    <delete id="deleteRelationEmployeeWithRole">
+        delete from  employee_role_rel where eid=#{id};
+    </delete>
+
+    <!--根据名字查用户 -->
+    <select id="getInfoByEmployeeName" resultType="com.lzy.domain.Employee">
+        select * from employee where username=#{username}
+    </select>
+    <!--查询用户的角色名称 -->
+    <select id="getRoleByEmployeeId" resultType="java.lang.String">
+        SELECT rnum from role r LEFT JOIN employee_role_rel er on r.rid=er.rid WHERE er.eid=74
+    </select>
+
+    <!--查询用户的权限 -->
+    <select id="getPermissionByEmployeeId" resultType="java.lang.String">
+        SELECT pe.presource from permission pe LEFT JOIN role_permission_rel rp on
+                pe.pid =rp.pid WHERE rp.rid in (SELECT rid from employee_role_rel WHERE eid =72 )
+    </select>
+</mapper>
