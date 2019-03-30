@@ -11,4 +11,6 @@ public interface MenuMapper  {
     List<Menu> getMenuList();
 
     void saveMenu(Menu menu);
+
+    void updateMenu(Menu menu);
 }

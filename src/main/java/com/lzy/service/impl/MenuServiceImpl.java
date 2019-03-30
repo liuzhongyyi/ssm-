@@ -30,12 +30,17 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> getMenuList() {
+    public List<Menu> getMenuListParent() {
         return mapper.getMenuList();
     }
 
     @Override
     public void saveMenu(Menu menu) {
          mapper.saveMenu(menu);
+    }
+
+    @Override
+    public void updateMenu(Menu menu) {
+        mapper.updateMenu(menu);
     }
 }

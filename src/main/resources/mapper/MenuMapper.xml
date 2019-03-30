@@ -2,7 +2,7 @@
 <mapper namespace="com.lzy.mapper.MenuMapper">
     <select id="getMenuList" resultMap="menuBase">
           SELECT m1.id,m1.text,m1.url, m2.id as m_id ,m2.text as m_text,m2.url as m_url from menu m1 LEFT join menu m2
-        on m1.id =m2.parent_id
+        on m1.id =m2.parent_id order by m1.id
     </select>
 
     <resultMap id="menuBase" type="com.lzy.domain.Menu">
@@ -28,6 +28,10 @@
 
     <!--保存菜单 -->
     <insert id="saveMenu">
-        insert into id,text,url,parent_id values (#{id},#{text},#{url},#{})
+        insert into menu (id,text,url,parent_id)  values (#{id},#{text},#{url},#{parent.id})
     </insert>
+
+    <update id="updateMenu">
+        update menu set text=#{text},url=#{url},parent_id = #{parent.id} where id =#{id}
+    </update>
 </mapper>

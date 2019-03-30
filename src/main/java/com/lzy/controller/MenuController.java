@@ -24,14 +24,14 @@ public class MenuController {
     @RequestMapping("/menuList")
     PageListResult getMenuList(PageNum pageNum) {
         PageListResult menuList = menuService.getMenuList(pageNum);
-
         return menuList;
     }
 
     @ResponseBody
     @RequestMapping("/parentList")
     public List<Menu> MenuList() {
-        List<Menu> menuList = menuService.getMenuList();
+        List<Menu> menuList = menuService.getMenuListParent();
+        System.out.println(menuList);
         return menuList;
     }
 
@@ -53,4 +53,23 @@ public class MenuController {
             return ajaxResult;
         }
     }
+/*
+    @ResponseBody
+    @RequestMapping("/updateMenu")
+   AjaxResult updateMenu(Menu menu)
+   {
+       AjaxResult ajaxResult = new AjaxResult();
+       try {
+           menuService.updateMenu(menu);
+           ajaxResult.setSuccessful(true);
+           ajaxResult.setMsg("保存成功");
+       }catch (Exception e){
+           e.printStackTrace();
+           ajaxResult.setSuccessful(false);
+           ajaxResult.setMsg("保存失败");
+
+       }finally {
+           return ajaxResult;
+       }
+   }*/
 }

@@ -7,7 +7,7 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter@Getter@ToString
+@Setter@Getter
 public class Menu {
     private Long id;
 

@@ -10,7 +10,9 @@ public interface MenuService {
 
     PageListResult getMenuList(PageNum pageNum);
 
-    List<Menu> getMenuList();
+    List<Menu> getMenuListParent();
 
     void saveMenu(Menu menu);
+
+    void updateMenu(Menu menu);
 }
